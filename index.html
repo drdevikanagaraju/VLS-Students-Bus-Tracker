@@ -2,11 +2,30 @@
 <html>
     <head>
         <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+        <style>
+            #map { height: 100; width: 100%; }
+        </style>
+
         <script type="module" src="script.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwzYtXxhhFBqytGFHf9pnYxhFeaYedbQc" async defer></script>
     </head>
     <body>
         <h1>Time Stamp Live Tracking</h1>
-        <div id="googleMap" style="height: 82vh; width: 100%;"></div>
+
+        <select id="dropdown">
+            <option value="Default">VLS School</option>
+            <option value="Route 1">Route - 1: KA02AC3624</option>
+            <option value="Route 2">Route - 2: KA50A0429</option>
+            <option value="Route 3">Route - 3: KA02AC9134</option>
+            <option value="Route 4">Route - 4: KA02AB2740</option>
+            <option value="Route 5">Route - 5: KA02AJ5519</option>
+        </select>
+
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script src="script.js" type="module"></script>
+
+        <div id="map"></div>
+
     </body>
 </html>

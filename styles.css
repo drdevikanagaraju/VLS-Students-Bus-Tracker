@@ -8,7 +8,12 @@ h1 {
     color: white;
 }
 
-#googleMap {
+#map {
     width:100%;
-    height:89vh;
+    height:82vh;
+}
+
+#dropdown {
+    top: 5em;
+    left: 10em;
 }

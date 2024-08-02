@@ -20,34 +20,39 @@ const db = getDatabase(app);
 let map;
 let marker;
 
+// Define the custom icon
+const customIcon = L.icon({
+  iconUrl: '/bus_icon.png', // URL to your custom icon image
+  iconSize: [38, 38], // size of the icon
+  iconAnchor: [19, 38], // point of the icon which will correspond to marker's location
+  popupAnchor: [0, -38] // point from which the popup should open relative to the iconAnchor
+});
+
 function initializeMap(lat, long) {
-  const myCenter = new google.maps.LatLng(lat, long);
-  const mapProp = {
-    center: myCenter,
-    zoom: 18,
-    mapTypeId: google.maps.MapTypeId.HYBRID, // Use SATELLITE or HYBRID for tilt
-    tilt: 45, // Tilt the map
-    heading: 90 // Set the map heading (rotation)
-  };
-  map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-  marker = new google.maps.Marker({ position: myCenter, icon: "bus_icon.png" });
-  marker.setMap(map);
+  console.log(lat, long);
+  map = L.map('map').setView([lat, long], 17);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: ''
+  }).addTo(map);
+
+  marker = L.marker([lat, long], { icon: customIcon }).addTo(map);
 }
 
 function smoothMoveMarker(toLat, toLng) {
-  const fromLatLng = marker.getPosition();
-  const toLatLng = new google.maps.LatLng(toLat, toLng);
-  const deltaLat = toLatLng.lat() - fromLatLng.lat();
-  const deltaLng = toLatLng.lng() - fromLatLng.lng();
+  const fromLatLng = marker.getLatLng();
+  const toLatLng = L.latLng(toLat, toLng);
+  const deltaLat = toLatLng.lat - fromLatLng.lat;
+  const deltaLng = toLatLng.lng - fromLatLng.lng;
   const steps = 100; // Number of steps for the animation
   let currentStep = 0;
 
   function moveMarker() {
-    const newLat = fromLatLng.lat() + (deltaLat * currentStep) / steps;
-    const newLng = fromLatLng.lng() + (deltaLng * currentStep) / steps;
-    const newLatLng = new google.maps.LatLng(newLat, newLng);
-    marker.setPosition(newLatLng);
-    map.setCenter(newLatLng);
+    const newLat = fromLatLng.lat + (deltaLat * currentStep) / steps;
+    const newLng = fromLatLng.lng + (deltaLng * currentStep) / steps;
+    const newLatLng = L.latLng(newLat, newLng);
+    marker.setLatLng(newLatLng);
+    map.panTo(newLatLng);
 
     if (currentStep < steps) {
       currentStep++;
@@ -62,11 +67,12 @@ function updateMap(lat, long) {
   smoothMoveMarker(lat, long);
 }
 
-function myMap() {
-  const dbRef = ref(db, `/Time_Stamp_App`);
+function myMap(route) {
+  const dbRef = ref(db, route);
   onValue(dbRef, (snapshot) => {
     if (snapshot.exists()) {
       const locationData = snapshot.val();
+      console.log(locationData);
       if (!map || !marker) {
         initializeMap(locationData.lat, locationData.long);
       } else {
@@ -80,12 +86,22 @@ function myMap() {
   });
 }
 
-// Ensure DOM is fully loaded before calling myMap
+const dropdown = document.getElementById('dropdown');
+
 document.addEventListener("DOMContentLoaded", (event) => {
-  // Ensure Google Maps API is loaded before calling myMap
-  if (typeof google !== 'undefined' && google.maps) {
-    myMap();
-  } else {
-    console.error('Google Maps API not loaded');
-  }
+    myMap("Default");
 });
+
+document.addEventListener('DOMContentLoaded', (event) => {
+            const dropdown = document.getElementById('dropdown');
+
+    dropdown.addEventListener('change', () => {
+
+        var selectedValue = dropdown.value;
+        myMap(selectedValue);
+
+        dropdown.remove();
+
+    });
+});
+
