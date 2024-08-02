@@ -22,7 +22,7 @@ let marker;
 
 // Define the custom icon
 const customIcon = L.icon({
-  iconUrl: '/bus_icon.png', // URL to your custom icon image
+  iconUrl: 'bus_icon.png', // URL to your custom icon image
   iconSize: [38, 38], // size of the icon
   iconAnchor: [19, 38], // point of the icon which will correspond to marker's location
   popupAnchor: [0, -38] // point from which the popup should open relative to the iconAnchor
