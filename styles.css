@@ -1,0 +1,14 @@
+body {
+    background-color: #000000;
+}
+
+h1 {
+    text-align: center;
+    font-family: sans-serif;
+    color: white;
+}
+
+#googleMap {
+    width:100%;
+    height:89vh;
+}
