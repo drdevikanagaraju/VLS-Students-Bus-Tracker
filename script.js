@@ -30,7 +30,7 @@ function initializeMap(lat, long) {
     heading: 90 // Set the map heading (rotation)
   };
   map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-  marker = new google.maps.Marker({ position: myCenter });
+  marker = new google.maps.Marker({ position: myCenter, icon: "bus_icon.png" });
   marker.setMap(map);
 }
 
