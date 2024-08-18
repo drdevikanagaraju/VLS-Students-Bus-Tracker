@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js";
 
-// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAmtNGsTGII7c7ecu9F2SATccmkxxcPdXY",
   authDomain: "time-stamp-f5d2e.firebaseapp.com",
@@ -12,21 +11,11 @@ const firebaseConfig = {
   measurementId: "G-QKN79NR1T2"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Initialize the map and marker variables
 let map;
 let marker;
-
-// Define the custom icon
-const customIcon = L.icon({
-  iconUrl: 'bus_icon.png', // URL to your custom icon image
-  iconSize: [38, 38], // size of the icon
-  iconAnchor: [19, 38], // point of the icon which will correspond to marker's location
-  popupAnchor: [0, -38] // point from which the popup should open relative to the iconAnchor
-});
 
 function initializeMap(lat, long) {
   console.log(lat, long);
@@ -36,7 +25,7 @@ function initializeMap(lat, long) {
     attribution: ''
   }).addTo(map);
 
-  marker = L.marker([lat, long], { icon: customIcon }).addTo(map);
+  marker = L.marker([lat, long]).addTo(map);
 }
 
 function smoothMoveMarker(toLat, toLng) {
@@ -44,7 +33,7 @@ function smoothMoveMarker(toLat, toLng) {
   const toLatLng = L.latLng(toLat, toLng);
   const deltaLat = toLatLng.lat - fromLatLng.lat;
   const deltaLng = toLatLng.lng - fromLatLng.lng;
-  const steps = 100; // Number of steps for the animation
+  const steps = 100;
   let currentStep = 0;
 
   function moveMarker() {
