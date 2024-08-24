@@ -17,13 +17,6 @@ const db = getDatabase(app);
 let map;
 let marker;
 
-// const customIcon = L.icon({
-//   iconUrl: 'location_icon.png',
-//   iconSize: [38, 38],
-//   iconAnchor: [19, 38],
-//   popupAnchor: [0, -38]
-// });
-
 function initializeMap(lat, long) {
   console.log(lat, long);
   map = L.map('map').setView([lat, long], 17);
