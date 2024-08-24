@@ -17,12 +17,12 @@ const db = getDatabase(app);
 let map;
 let marker;
 
-const customIcon = L.icon({
-  iconUrl: 'location_icon.png',
-  iconSize: [38, 38],
-  iconAnchor: [19, 38],
-  popupAnchor: [0, -38]
-});
+// const customIcon = L.icon({
+//   iconUrl: 'location_icon.png',
+//   iconSize: [38, 38],
+//   iconAnchor: [19, 38],
+//   popupAnchor: [0, -38]
+// });
 
 function initializeMap(lat, long) {
   console.log(lat, long);
@@ -30,7 +30,7 @@ function initializeMap(lat, long) {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: ''
   }).addTo(map);
-  marker = L.marker([lat, long], { icon: customIcon }).addTo(map);
+  marker = L.marker([lat, long]).addTo(map);
 }
 
 
